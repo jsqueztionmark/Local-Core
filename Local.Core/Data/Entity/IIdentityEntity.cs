@@ -1,4 +1,4 @@
-namespace Local.Core.Data;
+namespace Local.Core.Data.Entity;
 
 public interface IIdentityEntity<T>
 {
