@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Transactions;
-//using EFCore.BulkExtensions;
+using EFCore.BulkExtensions;
 using Local.Core.Data.Entity;
 using ProEnablement.Core.Data.Repository;
 
@@ -10,8 +10,8 @@ namespace Local.Core.Data.Repository
         where TEntity : EntityBase
         where TContext : DbContext
     {
-        protected readonly TContext _db;
-        protected DbSet<TEntity> _dbSet;
+        private readonly TContext _db;
+        private readonly DbSet<TEntity> _dbSet;
 
         public RepositoryBase(TContext context)
         {
@@ -53,14 +53,12 @@ namespace Local.Core.Data.Repository
 
         public virtual void BulkInsert(IEnumerable<TEntity> entities)
         {
-            //_db.BulkInsert(entities);
-            throw new NotImplementedException();
+            _db.BulkInsert(entities);
         }
 
         public virtual void BulkDelete(IEnumerable<TEntity> entities)
         {
-            //_db.BulkDelete(entities);
-            throw new NotImplementedException();
+            _db.BulkDelete(entities);
         }
 
         public virtual void Update(TEntity entity)
