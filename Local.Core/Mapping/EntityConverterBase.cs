@@ -70,36 +70,32 @@ public abstract class EntityConverterBase<TEntity, TModel> : IEntityConverter<TE
 
     public virtual IEnumerable<TModel?> ToModels(IEnumerable<TEntity?> entities)
     {
-        var enumerable = entities as TEntity[] ?? entities.ToArray();
-        if (!enumerable.Any()) return new List<TModel>();
-
+        if(entities == null || !entities.Any()) return new List<TModel?>();    
         try
         {
             var mList = new List<TModel?>();
-            foreach (var entity in enumerable) mList.Add(ToModel(entity));
+            foreach (var entity in entities) mList.Add(ToModel(entity));
             return mList;
         }
         catch (System.Exception ex)
         {
-            var msg = $"Error in ToComponents base for entity type {enumerable.First()!.GetType().FullName}.";
+            var msg = $"Error in ToComponents base for entity type {entities.First()!.GetType().FullName}.";
             throw new EntityMappingException(msg, ex);
         }
     }
 
     public virtual IEnumerable<TEntity?> ToEntities(IEnumerable<TModel?> models)
     {
-        var enumerable = models as TModel[] ?? models.ToArray();
-        if (!enumerable.Any()) return new List<TEntity>();
-
+        if(models == null || !models.Any()) return new List<TEntity?>();
         try
         {
             var eList = new List<TEntity?>();
-            foreach (var model in enumerable) eList.Add(ToEntity(model));
+            foreach (var model in models) eList.Add(ToEntity(model));
             return eList;
         }
         catch (System.Exception ex)
         {
-            var msg = $"Error in ToEntities base for component type {enumerable.First()!.GetType().FullName}.";
+            var msg = $"Error in ToEntities base for component type {models.First()!.GetType().FullName}.";
             throw new EntityMappingException(msg, ex);
         }
     }
